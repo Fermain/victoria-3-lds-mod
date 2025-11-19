@@ -1,0 +1,17 @@
+lds_utah_gathering = {
+	icon = "gfx/interface/icons/modifiers/migration_attraction_mult.dds"
+	state_migration_pull_mult = 1.0 # Double migration attraction
+}
+
+lds_utah_territory = {
+	icon = "gfx/interface/icons/modifiers/unrest.dds"
+	state_turmoil_mult = 0.1
+	state_tax_capacity_add = -25 # Hard to tax the territory
+}
+
+lds_federal_crackdown = {
+	icon = "gfx/interface/icons/modifiers/garrison.dds"
+	state_turmoil_mult = 0.5
+	state_conscription_rate_mult = -0.5
+}
+

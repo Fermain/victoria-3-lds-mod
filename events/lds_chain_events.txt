@@ -1,0 +1,146 @@
+# Mormon Migration and Deseret Events
+
+# 2. The Exodus to Utah (approx 1846-47)
+lds_events.2 = {
+	type = country_event
+	title = lds_events.2.t
+	desc = lds_events.2.d
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		tag = USA
+		year >= 1845
+		NOT = { has_variable = lds_exodus_happened }
+		exists = c:USA
+	}
+
+	immediate = {
+		set_variable = lds_exodus_happened
+	}
+
+	option = {
+		name = lds_events.2.a
+		
+		# Add migration attraction to Utah
+		s:STATE_UTAH = {
+			add_modifier = {
+				name = lds_utah_gathering
+				years = 15
+			}
+		}
+
+		# Move some existing pops immediately to simulate the pioneer vanguard
+		# We iterate through states with Mormon pops and move a percentage
+		every_scope_state = {
+			limit = {
+				owner = c:USA
+				has_pop_religion = mormon
+			}
+			every_scope_pop = {
+				limit = {
+					religion = mormon
+				}
+				# Move 30% of mormon pops to Utah immediately
+				move_pop_to = {
+					target = s:STATE_UTAH
+					factor = 0.3
+				}
+			}
+		}
+	}
+}
+
+# 3. The State of Deseret (1849-50)
+lds_events.3 = {
+	type = country_event
+	title = lds_events.3.t
+	desc = lds_events.3.d
+	icon = "gfx/interface/icons/event_icons/event_crowd.dds"
+
+	trigger = {
+		tag = USA
+		year >= 1849
+		has_variable = lds_exodus_happened
+		NOT = { has_variable = lds_deseret_resolved }
+		s:STATE_UTAH = {
+			has_pop_religion = mormon
+		}
+	}
+
+	immediate = {
+		set_variable = lds_deseret_resolved
+	}
+
+	# Option A: Historical - Compromise of 1850 / Utah Territory
+	option = {
+		name = lds_events.3.a
+		ai_chance = { base = 90 }
+		
+		s:STATE_UTAH = {
+			add_modifier = {
+				name = lds_utah_territory
+				years = 20
+			}
+		}
+		
+		# Tensions rise but stay within the union
+		add_radicals = {
+			culture = yankee
+			religion = mormon
+			value = 0.1
+		}
+	}
+
+	# Option B: Alt-History - Recognize Deseret
+	option = {
+		name = lds_events.3.b
+		ai_chance = { base = 5 }
+		
+		release_subject = {
+			country = c:DES
+			target_state = s:STATE_UTAH
+			relation = puppet
+		}
+		
+		# Give Deseret claims on the "Mega-Deseret" region
+		c:DES = {
+			add_claim = s:STATE_NEVADA
+			add_claim = s:STATE_ARIZONA
+			add_claim = s:STATE_CALIFORNIA
+			add_claim = s:STATE_COLORADO
+			add_claim = s:STATE_NEW_MEXICO
+			add_claim = s:STATE_WYOMING
+			add_claim = s:STATE_IDAHO
+			add_claim = s:STATE_OREGON
+		}
+
+		# Upset other factions
+		ig:ig_intelligentsia = {
+			add_approval = -5
+		}
+		ig:ig_devout = {
+			add_approval = -5 # Protestant establishment unhappy
+		}
+	}
+
+	# Option C: Crackdown - Reject Claims entirely
+	option = {
+		name = lds_events.3.c
+		ai_chance = { base = 5 }
+
+		s:STATE_UTAH = {
+			add_modifier = {
+				name = lds_federal_crackdown
+				years = 10
+			}
+		}
+
+		# Massive radicalization
+		add_radicals = {
+			culture = yankee
+			religion = mormon
+			value = 0.5
+		}
+	}
+}
+

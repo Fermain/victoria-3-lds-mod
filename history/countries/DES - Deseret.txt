@@ -1,0 +1,6 @@
+capital = STATE_UTAH
+cultures = { yankee }
+effect = {
+	set_state_religion = mormon
+	add_modifier = lds_deseret_identity
+}

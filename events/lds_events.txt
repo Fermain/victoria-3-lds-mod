@@ -1,0 +1,29 @@
+namespace = lds_events
+
+lds_events.1 = {
+	type = country_event
+	title = lds_events.1.t
+	desc = lds_events.1.d
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		tag = USA
+		NOT = { has_variable = lds_started }
+		year >= 1836
+		month >= 2
+	}
+
+	immediate = {
+		set_variable = lds_started
+	}
+
+	option = {
+		name = lds_events.1.a
+		add_modifier = {
+			name = lds_conversion_boost
+			years = 10
+		}
+		# Joseph Smith is already defined in history/characters as an agitator
+		# ensuring he is present in the country interest groups if not already
+	}
+}

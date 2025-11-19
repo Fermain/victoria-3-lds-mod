@@ -1,0 +1,10 @@
+lds_conversion_boost = {
+	icon = "gfx/interface/icons/modifiers/religious_conversion_mult.dds"
+	country_religious_conversion_speed_mult = 5.0
+}
+
+lds_deseret_identity = {
+	icon = "gfx/interface/icons/modifiers/state_religion_standard_of_living_mult.dds"
+	state_religion_standard_of_living_mult = 0.25
+}
+

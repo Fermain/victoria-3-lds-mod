@@ -1,0 +1,6 @@
+on_yearly_pulse_country = {
+	events = {
+		lds_events.1
+	}
+}
+

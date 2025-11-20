@@ -1,3 +1,5 @@
+namespace = lds_events
+
 # Mormon Migration and Deseret Events
 
 # 2. The Exodus to Utah (approx 1846-47)
@@ -19,8 +21,8 @@ lds_events.2 = {
 		# We will relax this: Only fire if USA owns it OR if Mexico owns it (historical).
 		# If it's uncolonized, we skip firing until it is.
 		OR = {
-			s:STATE_UTAH = { owner = c:USA }
-			s:STATE_UTAH = { owner = c:MEX }
+			c:USA = { owns_state_region = s:STATE_UTAH }
+			c:MEX = { owns_state_region = s:STATE_UTAH }
 		}
 	}
 
@@ -93,9 +95,9 @@ lds_events.3 = {
 		year < 1870 # Expire if not fired by 1870
 		has_variable = lds_exodus_happened
 		NOT = { has_variable = lds_deseret_resolved }
+		c:USA = { owns_state_region = s:STATE_UTAH }
 		s:STATE_UTAH = {
 			has_pop_religion = mormon
-			owner = c:USA
 		}
 	}
 

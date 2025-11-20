@@ -1,3 +1,4 @@
+
 namespace = lds_events
 
 # Mormon Migration and Deseret Events
@@ -12,18 +13,12 @@ lds_events.2 = {
 	trigger = {
 		tag = USA
 		year >= 1845
-		year < 1860 # Expire if not fired by 1860
+		year < 1860
 		NOT = { has_variable = lds_exodus_happened }
 		exists = c:USA
 		
-		# Utah must be accessible (Owned by USA or Mexico, or ANYONE, just not completely void)
-		# But strictly, for USA to send pops there, it helps if it exists.
-		# We will relax this: Only fire if USA owns it OR if Mexico owns it (historical).
-		# If it's uncolonized, we skip firing until it is.
-		OR = {
-			c:USA = { owns_state_region = s:STATE_UTAH }
-			c:MEX = { owns_state_region = s:STATE_UTAH }
-		}
+		# Check if USA owns any part of Utah
+		c:USA = { owns_state_region = s:STATE_UTAH }
 	}
 
 	# Ensure it fires reasonably soon after 1845
@@ -31,15 +26,15 @@ lds_events.2 = {
 		base = 1000
 	}
 	
-	duration = 4 # Auto-select after 4 months
+	duration = 4
 
 	immediate = {
 		set_variable = lds_exodus_happened
 
-		# Create Brigham Young to lead the Exodus
+		# Create Brigham Young
 		create_character = {
-			first_name = Brigham
-			last_name = Young
+			first_name = "Brigham"
+			last_name = "Young"
 			birth_date = 1801.6.1
 			culture = yankee
 			religion = mormon
@@ -53,30 +48,16 @@ lds_events.2 = {
 	option = {
 		name = lds_events.2.a
 		
-		# Add migration attraction to Utah
-		s:STATE_UTAH = {
+		# Add migration attraction to Utah (State Scope)
+		# We must find the USA's Utah state first
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_UTAH
+				owner = c:USA
+			}
 			add_modifier = {
 				name = lds_utah_gathering
 				years = 15
-			}
-		}
-
-		# Move some existing pops immediately to simulate the pioneer vanguard
-		# We iterate through states with Mormon pops and move a percentage
-		every_scope_state = {
-			limit = {
-				owner = c:USA
-				has_pop_religion = mormon
-			}
-			every_scope_pop = {
-				limit = {
-					religion = mormon
-				}
-				# Move 30% of mormon pops to Utah immediately
-				move_pop_to = {
-					target = s:STATE_UTAH
-					factor = 0.3
-				}
 			}
 		}
 	}
@@ -92,44 +73,48 @@ lds_events.3 = {
 	trigger = {
 		tag = USA
 		year >= 1849
-		year < 1870 # Expire if not fired by 1870
+		year < 1870
 		has_variable = lds_exodus_happened
 		NOT = { has_variable = lds_deseret_resolved }
+		
+		# USA must own Utah
 		c:USA = { owns_state_region = s:STATE_UTAH }
-		s:STATE_UTAH = {
+		
+		# Utah must have Mormons
+		# Scope to the state properly to check pops
+		any_scope_state = {
+			state_region = s:STATE_UTAH
+			owner = c:USA
 			has_pop_religion = mormon
 		}
 	}
 
-	# Ensure it fires reasonably soon after 1849
 	weight_multiplier = {
 		base = 1000
 	}
 	
-	duration = 4 # Auto-select after 4 months
+	duration = 4
 
 	immediate = {
 		set_variable = lds_deseret_resolved
 	}
 
-	# Option A: Historical - Compromise of 1850 / Utah Territory
+	# Option A: Historical - Compromise of 1850
 	option = {
 		name = lds_events.3.a
 		ai_chance = { base = 90 }
-		trigger = {
-			s:STATE_UTAH = {
-				is_country_capital = no
-			}
-		}
 		
-		s:STATE_UTAH = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_UTAH
+				owner = c:USA
+			}
 			add_modifier = {
 				name = lds_utah_territory
 				years = 20
 			}
 		}
 		
-		# Tensions rise but stay within the union
 		add_radicals = {
 			culture = yankee
 			religion = mormon
@@ -141,38 +126,30 @@ lds_events.3 = {
 	option = {
 		name = lds_events.3.b
 		ai_chance = { base = 5 }
-		trigger = {
-			s:STATE_UTAH = {
-				is_country_capital = no
-			}
-		}
 		
+		# Identify the Utah state to release
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_UTAH
+				owner = c:USA
+			}
+			save_scope_as = utah_state
+			
+			# Ensure Deseret has a claim here before releasing
+			add_claim = c:DES
+		}
+
 		release_subject = {
 			country = c:DES
-			target_state = s:STATE_UTAH
+			target_state = scope:utah_state
 			relation = puppet
 		}
 		
-		# Ensure Deseret identity
+		# Now Deseret should exist
 		c:DES = {
 			set_state_religion = mormon
 			add_modifier = lds_deseret_identity
-		}
-
-		# Transfer Brigham Young to Deseret and make him ruler
-		c:USA = {
-			every_character = {
-				limit = {
-					first_name = Brigham
-					last_name = Young
-				}
-				set_country = c:DES
-				set_role = ruler
-			}
-		}
-		
-		# Give Deseret claims on the "Mega-Deseret" region
-		c:DES = {
+			
 			add_claim = s:STATE_NEVADA
 			add_claim = s:STATE_ARIZONA
 			add_claim = s:STATE_CALIFORNIA
@@ -183,28 +160,49 @@ lds_events.3 = {
 			add_claim = s:STATE_OREGON
 		}
 
-		# Upset other factions
+		# Move Brigham Young
+		c:USA = {
+			every_character = {
+				limit = {
+					first_name = "Brigham"
+					last_name = "Young"
+				}
+				save_scope_as = brigham_young_char
+			}
+		}
+		
+		scope:brigham_young_char = {
+			set_country = c:DES
+		}
+		
+		c:DES = {
+			set_ruler = scope:brigham_young_char
+		}
+
 		ig:ig_intelligentsia = {
 			add_approval = -5
 		}
 		ig:ig_devout = {
-			add_approval = -5 # Protestant establishment unhappy
+			add_approval = -5
 		}
 	}
 
-	# Option C: Crackdown - Reject Claims entirely
+	# Option C: Crackdown
 	option = {
 		name = lds_events.3.c
 		ai_chance = { base = 5 }
 
-		s:STATE_UTAH = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_UTAH
+				owner = c:USA
+			}
 			add_modifier = {
 				name = lds_federal_crackdown
 				years = 10
 			}
 		}
 
-		# Massive radicalization
 		add_radicals = {
 			culture = yankee
 			religion = mormon
@@ -212,5 +210,3 @@ lds_events.3 = {
 		}
 	}
 }
-
-

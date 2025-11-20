@@ -1,0 +1,4 @@
+DES = {
+	color = { 68 188 216 }
+	type = countries
+}

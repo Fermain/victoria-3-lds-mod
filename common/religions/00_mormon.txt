@@ -1,8 +1,10 @@
+
+# RELIGION DEFINITION
 mormon = {
 	texture = "gfx/interface/icons/religion_icons/protestant.dds"
 	traits = {
-		christian
-		protestant_heritage
+		christian_religion
+		protestant_reformed
 	}
 	color = { 0.3 0.6 0.8 }
 	taboos = {

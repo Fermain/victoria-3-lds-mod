@@ -24,4 +24,3 @@ lds_federal_crackdown = {
 	state_turmoil_mult = 0.5
 	state_radicals_from_discrimination_mult = 0.25
 }
-

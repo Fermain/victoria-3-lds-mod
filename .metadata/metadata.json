@@ -1,0 +1,15 @@
+{
+    "name": "Latter Day Saints",
+    "id": "",
+    "version": "0.0.1",
+    "supported_game_version": "1.11.*",
+    "short_description": "Introduces Mormonism, Joseph Smith, and the State of Deseret.",
+    "tags": [
+        "Religion",
+        "Historical"
+    ],
+    "relationships": [],
+    "game_custom_data": {
+        "multiplayer_synchronized": true
+    }
+}

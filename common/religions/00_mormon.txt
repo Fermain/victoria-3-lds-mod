@@ -1,5 +1,5 @@
 mormon = {
-	texture = "gfx/interface/icons/religion_icons/mormon.dds"
+	texture = "gfx/interface/icons/religion_icons/protestant.dds"
 	traits = {
 		christian
 		protestant_heritage

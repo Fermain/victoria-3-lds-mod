@@ -10,11 +10,84 @@ lds_events.1 = {
 		tag = USA
 		NOT = { has_variable = lds_started }
 		year >= 1836
-		month >= 2
+		year < 1845 # Expire if not fired by 1845
 	}
+
+	# Ensure it fires ASAP
+	weight_multiplier = {
+		base = 1000
+	}
+	
+	duration = 3 # Auto-select default option after 3 months
 
 	immediate = {
 		set_variable = lds_started
+
+		# SEED MORMON POPS VIA EVENT
+		
+		# OHIO (Kirtland Hub)
+		random_scope_state = {
+			limit = { state_region = s:STATE_OHIO }
+			create_pop = {
+				culture = yankee
+				religion = mormon
+				size = 1500
+				type = farmers
+			}
+			create_pop = {
+				culture = yankee
+				religion = mormon
+				size = 500
+				type = shopkeepers
+			}
+			create_pop = {
+				culture = yankee
+				religion = mormon
+				size = 100
+				type = clergymen
+			}
+		}
+
+		# Add Joseph Smith as Agitator
+		create_character = {
+			first_name = Joseph
+			last_name = Smith
+			birth_date = 1805.12.23
+			culture = yankee
+			religion = mormon
+			role = agitator
+			traits = { charismatic }
+			ideology = ideology_moralist
+			interest_group = ig_devout
+		}
+
+		# MISSOURI (Zion)
+		random_scope_state = {
+			limit = { state_region = s:STATE_MISSOURI }
+			create_pop = {
+				culture = yankee
+				religion = mormon
+				size = 1200
+				type = farmers
+			}
+			create_pop = {
+				culture = yankee
+				religion = mormon
+				size = 400
+				type = laborers
+			}
+		}
+
+		# NEW YORK (Original converts)
+		random_scope_state = {
+			limit = { state_region = s:STATE_NEW_YORK }
+			create_pop = {
+				culture = yankee
+				religion = mormon
+				size = 50
+				type = farmers
+			}
+		}
 	}
 
 	option = {
@@ -23,7 +96,5 @@ lds_events.1 = {
 			name = lds_conversion_boost
 			years = 10
 		}
-		# Joseph Smith is already defined in history/characters as an agitator
-		# ensuring he is present in the country interest groups if not already
 	}
 }

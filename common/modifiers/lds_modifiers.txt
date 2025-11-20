@@ -8,3 +8,20 @@ lds_deseret_identity = {
 	state_religion_standard_of_living_mult = 0.25
 }
 
+lds_utah_gathering = {
+	icon = "gfx/interface/icons/modifiers/migration_pull_mult.dds"
+	state_migration_pull_mult = 0.5
+}
+
+lds_utah_territory = {
+	icon = "gfx/interface/icons/modifiers/state_bureaucracy_mult.dds"
+	state_government_administration_throughput_mult = 0.1
+	state_turmoil_mult = -0.25
+}
+
+lds_federal_crackdown = {
+	icon = "gfx/interface/icons/modifiers/unrest_icon.dds"
+	state_turmoil_mult = 0.5
+	state_radicals_from_discrimination_mult = 0.25
+}
+

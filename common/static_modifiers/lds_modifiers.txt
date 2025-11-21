@@ -1,0 +1,42 @@
+lds_conversion_boost = {
+	icon = "gfx/interface/icons/modifiers/religious_conversion_mult.dds"
+	state_conversion_mult = 5.0
+}
+
+lds_deseret_identity = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_positive.dds"
+	state_political_strength_mult = 0.1
+	state_loyalists_from_sol_change_mult = 0.1
+}
+
+lds_utah_gathering = {
+	icon = "gfx/interface/icons/modifiers/migration_pull_mult.dds"
+	state_migration_pull_mult = 0.5
+}
+
+lds_utah_territory = {
+	icon = "gfx/interface/icons/modifiers/state_bureaucracy_mult.dds"
+	building_government_administration_throughput_add = 0.1
+	state_turmoil_effects_mult = -0.25
+}
+
+lds_federal_crackdown = {
+	icon = "gfx/interface/icons/modifiers/unrest_icon.dds"
+	state_turmoil_effects_mult = 0.5
+	state_radicals_from_political_movements_mult = 0.25
+}
+
+mormon_standard_of_living_modifier_positive = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_positive.dds"
+	state_political_strength_mult = 0.05
+}
+
+mormon_standard_of_living_modifier_negative = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_negative.dds"
+	state_political_strength_mult = -0.05
+}
+
+lds_deseret_released_disapproval = {
+	icon = "gfx/interface/icons/modifiers/modifier_flag_negative.dds"
+	interest_group_approval_add = -5
+}

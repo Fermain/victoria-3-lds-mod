@@ -1,4 +1,10 @@
 on_yearly_pulse_country = {
+	on_actions = {
+		lds_yearly_pulse
+	}
+}
+
+lds_yearly_pulse = {
 	events = {
 		lds_events.1
 		lds_events.2

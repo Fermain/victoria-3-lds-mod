@@ -1,11 +1,9 @@
 ﻿l_english:
  mormon:0 "Mormon"
+ lds_mormon:0 "Mormon"
+ lds_conversion_boost:0 "Latter Day Saint Movement"
  modifier_lds_conversion_boost:0 "Latter Day Saint Movement"
  modifier_lds_conversion_boost_desc:0 "Missionaries are spreading the Book of Mormon with great zeal, gathering converts to Zion."
- lds_conversion_boost:0 "Latter Day Saint Movement"
- desc_lds_conversion_boost:0 "Missionaries are spreading the Book of Mormon with great zeal, gathering converts to Zion."
- modifier_lds_deseret_identity:0 "Deseret Identity"
- modifier_lds_deseret_identity_desc:0 "The Saints have forged a unique identity in the desert, separate from the Gentiles."
  lds_events.1.t:0 "The Saints in Kirtland"
  lds_events.1.d:0 "Following the dedication of the Kirtland Temple, the Church of Jesus Christ of Latter-day Saints is experiencing a surge of growth. Joseph Smith and other leaders are sending missionaries across the United States and to Great Britain to preach the Restoration."
  lds_events.1.a:0 "The work moves forward."

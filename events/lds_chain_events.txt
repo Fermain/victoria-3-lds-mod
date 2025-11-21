@@ -34,16 +34,10 @@ lds_events.2 = {
 
 		# Create Brigham Young
 		create_character = {
-			first_name = "Brigham"
-			last_name = "Young"
-			birth_date = 1801.6.1
-			culture = yankee
-			religion = mormon
-			role = agitator
-			traits = { ambitious direct }
-			ideology = ideology_traditionalist
-			interest_group = ig_devout
-			save_scope_as = brigham_young_usa
+			template = lds_brigham_young_template
+			on_created = {
+				save_scope_as = brigham_young_usa
+			}
 		}
 		set_global_variable = {
 			name = lds_brigham_young
@@ -54,7 +48,7 @@ lds_events.2 = {
 	option = {
 		name = lds_events.2.a
 		
-		# Add migration attraction to Utah (State Scope)
+		# Add migration attraction to Utah for Mormons specifically
 		random_scope_state = {
 			limit = {
 				state_region = s:STATE_UTAH
@@ -63,6 +57,22 @@ lds_events.2 = {
 			add_modifier = {
 				name = lds_utah_gathering
 				years = 15
+			}
+		}
+		
+		# Gradual conversion to Mormon in eastern states
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_OHIO
+					state_region = s:STATE_MISSOURI
+					state_region = s:STATE_NEW_YORK
+					state_region = s:STATE_ILLINOIS
+				}
+			}
+			convert_population = {
+				target = rel:mormon
+				value = 0.002
 			}
 		}
 	}
@@ -94,7 +104,7 @@ lds_events.3 = {
 			state_region = s:STATE_UTAH
 			owner = c:USA
 			any_scope_pop = {
-				religion = mormon
+				religion = rel:mormon
 			}
 		}
 	}
@@ -120,16 +130,16 @@ lds_events.3 = {
 				state_region = s:STATE_UTAH
 				owner = c:USA
 			}
+			save_scope_as = utah_state
 			add_modifier = {
 				name = lds_utah_territory
 				years = 20
 			}
-		}
-		
-		add_radicals = {
-			culture = yankee
-			religion = mormon
-			value = 0.1
+			add_radicals_in_state = {
+				value = small_radicals
+				culture = cu:yankee
+				religion = rel:mormon
+			}
 		}
 	}
 
@@ -145,74 +155,54 @@ lds_events.3 = {
 				owner = c:USA
 			}
 			save_scope_as = utah_state
-			
-			# Ensure Deseret has a claim here before releasing
-			# Claims are added to state_regions usually
-			s:STATE_UTAH = { add_claim = c:DES }
 		}
 
-		# Release Deseret
-		release_country = c:DES
+		# Add claims before releasing
+		s:STATE_UTAH = { add_claim = c:DES }
+		s:STATE_NEVADA = { add_claim = c:DES }
+		s:STATE_ARIZONA = { add_claim = c:DES }
 		
-		c:DES = {
-			# Subject relation handling is tricky, simpler to just release and set relations if needed or make puppet directly
-			# But release_country makes them independent usually.
-			# set_subject_relation isn't a standard effect in basic docs, trying make_puppet
-            # or just skip subject relation for now if syntax is unsure, but `make_puppet` is common.
-            # However, let's use script docs if possible. The error said `set_subject_relation` is unknown.
-            # Usually: `create_subject = { target = c:DES type = subject_type_puppet }` or similar.
-            # Let's stick to just release for now to fix the crash, and add claims properly.
-			
-			set_state_religion = mormon
-			add_modifier = { name = lds_deseret_identity }
-			
-			s:STATE_NEVADA = { add_claim = c:DES }
-			s:STATE_ARIZONA = { add_claim = c:DES }
-			s:STATE_CALIFORNIA = { add_claim = c:DES }
-			s:STATE_COLORADO = { add_claim = c:DES }
-			s:STATE_NEW_MEXICO = { add_claim = c:DES }
-			s:STATE_WYOMING = { add_claim = c:DES }
-			s:STATE_IDAHO = { add_claim = c:DES }
-			s:STATE_OREGON = { add_claim = c:DES }
-			
-			# Create Ruler Brigham Young
-			create_character = {
-				first_name = "Brigham"
-				last_name = "Young"
-				birth_date = 1801.6.1
-				culture = yankee
-				religion = mormon
-				role = politician
-				traits = { ambitious direct }
-				ideology = ideology_traditionalist
-				interest_group = ig_devout
-			}
-			every_scope_character = {
-				limit = {
-					first_name = "Brigham"
-					last_name = "Young"
-				}
-				set_ruler = yes
-			}
+		# Release Deseret
+		create_country = {
+			tag = DES
+			origin = root
+			state = scope:utah_state
 		}
-
-		# Kill old Brigham in USA
+		
+		# Kill old Brigham in USA before creating new one
 		if = {
 			limit = { has_global_variable = lds_brigham_young }
-			var:lds_brigham_young = {
+			global_var:lds_brigham_young = {
 				kill_character = yes
 			}
 			remove_global_variable = lds_brigham_young
 		}
+		
+		# Setup Deseret
+		hidden_effect = {
+			if = {
+				limit = { exists = c:DES }
+				c:DES = {
+					set_state_religion = rel:mormon
+					
+					# Create Ruler Brigham Young
+					create_character = {
+						template = lds_brigham_young_ruler_template
+					}
+				}
+			}
+		}
 
 		ig:ig_intelligentsia = {
-			add_approval = {
-				value = -5
+			add_modifier = {
+				name = lds_deseret_released_disapproval
+				months = normal_modifier_time
 			}
 		}
 		ig:ig_devout = {
-			add_approval = {
-				value = -5
+			add_modifier = {
+				name = lds_deseret_released_disapproval
+				months = normal_modifier_time
 			}
 		}
 	}
@@ -233,10 +223,16 @@ lds_events.3 = {
 			}
 		}
 
-		add_radicals = {
-			culture = yankee
-			religion = mormon
-			value = 0.5
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_UTAH
+				owner = c:USA
+			}
+			add_radicals_in_state = {
+				value = large_radicals
+				culture = cu:yankee
+				religion = rel:mormon
+			}
 		}
 	}
 }

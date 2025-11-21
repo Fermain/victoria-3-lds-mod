@@ -1,0 +1,50 @@
+lds_joseph_smith_template = {
+	first_name = Joseph
+	last_name = Smith
+	historical = yes
+	birth_date = 1805.12.23
+	is_agitator = yes
+	female = no
+	culture = cu:yankee
+	religion = rel:mormon
+	interest_group = ig_devout
+	ideology = ideology_traditionalist
+	traits = {
+		charismatic
+	}
+}
+
+lds_brigham_young_template = {
+	first_name = Brigham
+	last_name = Young
+	historical = yes
+	birth_date = 1801.6.1
+	is_agitator = yes
+	female = no
+	culture = cu:yankee
+	religion = rel:mormon
+	interest_group = ig_devout
+	ideology = ideology_traditionalist
+	traits = {
+		ambitious
+		direct
+	}
+}
+
+lds_brigham_young_ruler_template = {
+	first_name = Brigham
+	last_name = Young
+	historical = yes
+	birth_date = 1801.6.1
+	female = no
+	ruler = yes
+	culture = cu:yankee
+	religion = rel:mormon
+	interest_group = ig_devout
+	ideology = ideology_traditionalist
+	traits = {
+		ambitious
+		direct
+	}
+}
+

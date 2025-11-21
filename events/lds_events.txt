@@ -51,15 +51,7 @@ lds_events.1 = {
 
 		# Add Joseph Smith as Agitator
 		create_character = {
-			first_name = Joseph
-			last_name = Smith
-			birth_date = 1805.12.23
-			culture = yankee
-			religion = mormon
-			role = agitator
-			traits = { charismatic }
-			ideology = ideology_traditionalist
-			interest_group = ig_devout
+			template = lds_joseph_smith_template
 		}
 
 		# MISSOURI (Zion)
@@ -94,9 +86,22 @@ lds_events.1 = {
 	option = {
 		name = lds_events.1.a
 		default_option = yes
-		add_modifier = {
-			name = lds_conversion_boost
-			years = 10
+		
+		# Target specific states for Mormon conversion
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_OHIO
+					state_region = s:STATE_MISSOURI
+					state_region = s:STATE_NEW_YORK
+					state_region = s:STATE_ILLINOIS
+					state_region = s:STATE_PENNSYLVANIA
+				}
+			}
+			convert_population = {
+				target = rel:mormon
+				value = 0.001
+			}
 		}
 	}
 }

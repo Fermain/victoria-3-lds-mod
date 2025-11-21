@@ -1,3 +1,4 @@
+# COUNTRY DEFINITIONS
 DES = {
 	color = { 68 188 216 }
 	country_type = recognized

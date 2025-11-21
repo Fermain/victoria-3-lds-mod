@@ -7,7 +7,8 @@ lds_events.1 = {
 	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
 
 	trigger = {
-		tag = USA
+		exists = c:USA
+		this = c:USA
 		NOT = { has_variable = lds_started }
 		year >= 1836
 		year < 1845 # Expire if not fired by 1845
@@ -32,19 +33,19 @@ lds_events.1 = {
 				culture = yankee
 				religion = mormon
 				size = 1500
-				type = farmers
+				pop_type = farmers
 			}
 			create_pop = {
 				culture = yankee
 				religion = mormon
 				size = 500
-				type = shopkeepers
+				pop_type = shopkeepers
 			}
 			create_pop = {
 				culture = yankee
 				religion = mormon
 				size = 100
-				type = clergymen
+				pop_type = clergymen
 			}
 		}
 
@@ -55,9 +56,9 @@ lds_events.1 = {
 			birth_date = 1805.12.23
 			culture = yankee
 			religion = mormon
-			role = politician
+			role = agitator
 			traits = { charismatic }
-			ideology = ideology_moralist
+			ideology = ideology_traditionalist
 			interest_group = ig_devout
 		}
 
@@ -68,13 +69,13 @@ lds_events.1 = {
 				culture = yankee
 				religion = mormon
 				size = 1200
-				type = farmers
+				pop_type = farmers
 			}
 			create_pop = {
 				culture = yankee
 				religion = mormon
 				size = 400
-				type = laborers
+				pop_type = laborers
 			}
 		}
 
@@ -85,13 +86,14 @@ lds_events.1 = {
 				culture = yankee
 				religion = mormon
 				size = 50
-				type = farmers
+				pop_type = farmers
 			}
 		}
 	}
 
 	option = {
 		name = lds_events.1.a
+		default_option = yes
 		add_modifier = {
 			name = lds_conversion_boost
 			years = 10

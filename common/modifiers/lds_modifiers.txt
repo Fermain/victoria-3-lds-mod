@@ -24,3 +24,13 @@ lds_federal_crackdown = {
 	state_turmoil_mult = 0.5
 	state_radicals_from_discrimination_mult = 0.25
 }
+
+mormon_standard_of_living_modifier_positive = {
+	icon = "gfx/interface/icons/modifiers/state_religion_standard_of_living_mult.dds"
+	state_religion_standard_of_living_mult = 0.1
+}
+
+mormon_standard_of_living_modifier_negative = {
+	icon = "gfx/interface/icons/modifiers/state_religion_standard_of_living_mult.dds"
+	state_religion_standard_of_living_mult = -0.1
+}
